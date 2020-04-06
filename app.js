@@ -35,6 +35,7 @@ app.use((req, res, next) => {
 app.use(morgan("combined"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use("/images", express.static("images"));
 
 //routes for the app
 

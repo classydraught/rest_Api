@@ -2,6 +2,27 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Course = require("../models/course");
+const multer = require("multer");
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./images/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, new Date().toISOString() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  //reject a file
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpeg") {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({ storage: storage, fileFilter: fileFilter });
 
 router.get("/", (req, res, next) => {
   Course.find()
@@ -22,12 +43,13 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", upload.single("courseImage"), (req, res, next) => {
+  console.log(req.file);
   const course = new Course({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
     category: req.body.category,
-    image: req.body.image,
+    image: req.file.path,
     price: req.body.price,
     featured: req.body.featured,
     description: req.body.description,

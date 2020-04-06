@@ -5,6 +5,7 @@ const Review = require("../models/review");
 const Course = require("../models/course");
 router.get("/", (req, res, next) => {
   Review.find()
+    // .populate("courseId")
     .exec()
     .then((docs) => {
       res.status(200).json(docs);

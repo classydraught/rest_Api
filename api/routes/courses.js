@@ -28,12 +28,7 @@ router.get("/", (req, res, next) => {
   Course.find()
     .exec()
     .then((docs) => {
-      const response = {
-        count: docs.length,
-        products: docs,
-      };
-
-      res.status(200).json(response);
+      res.status(200).json(docs);
     })
     .catch((err) => {
       console.log(err);

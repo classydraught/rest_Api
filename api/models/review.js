@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-
 const reviewSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   courseId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "Product",
+    ref: "Course",
   },
   value: { type: Number, required: true },
   author: { type: String, required: true },

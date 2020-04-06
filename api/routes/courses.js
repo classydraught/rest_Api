@@ -7,8 +7,12 @@ router.get("/", (req, res, next) => {
   Course.find()
     .exec()
     .then((docs) => {
-      console.log(docs);
-      res.status(200).json(docs);
+      const response = {
+        count: docs.length,
+        products: docs,
+      };
+
+      res.status(200).json(response);
     })
     .catch((err) => {
       console.log(err);
@@ -31,7 +35,6 @@ router.post("/", (req, res, next) => {
   course
     .save()
     .then((result) => {
-      console.log(result);
       res.status(201).json({
         message: "Handling POST requests to /products",
         createdProduct: result,
@@ -50,7 +53,6 @@ router.get("/:coursesId", (req, res, next) => {
   Course.findById(id)
     .exec()
     .then((doc) => {
-      console.log("From database", doc);
       if (doc) {
         res.status(200).json(doc);
       } else {
@@ -75,7 +77,13 @@ router.patch("/:courseId", (req, res, next) => {
     .exec()
     .then((result) => {
       console.log(result);
-      res.status(200).json(result);
+      res.status(200).json({
+        message: "Course updated",
+        request: {
+          type: "GET",
+          url: "http://localhost:3000/products/" + id,
+        },
+      });
     })
     .catch((err) => {
       console.log(err);

@@ -13,6 +13,8 @@ mongoose.connect(
   { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
+mongoose.Promise = global.Promise;
+
 //cors handling
 
 app.use((req, res, next) => {

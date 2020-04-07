@@ -3,6 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Review = require("../models/review");
 const Course = require("../models/course");
+const checkAuth = require("../middleware/check-auth");
 router.get("/", (req, res, next) => {
   Review.find()
     // .populate("courseId")
@@ -16,7 +17,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", checkAuth, (req, res, next) => {
   Course.findById(req.body.courseId)
     .then((course) => {
       const review = new Review({
@@ -65,13 +66,13 @@ router.get("/:reviewId", (req, res, next) => {
     });
 });
 
-router.patch("/:reviewId", (req, res, next) => {
+router.patch("/:reviewId", checkAuth, (req, res, next) => {
   res.status(200).json({
     message: "Updated Review!",
   });
 });
 
-router.delete("/:reviewId", (req, res, next) => {
+router.delete("/:reviewId", checkAuth, (req, res, next) => {
   Review.remove({ _id: req.params.reviewId })
     .exec()
     .then((result) => {

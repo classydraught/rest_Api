@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const Course = require("../models/course");
 const multer = require("multer");
-
+const checkAuth = require("../middleware/check-auth");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./images/");
@@ -43,7 +43,7 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", upload.single("courseImage"), (req, res, next) => {
+router.post("/", checkAuth, upload.single("courseImage"), (req, res, next) => {
   console.log(req.file);
   const course = new Course({
     _id: new mongoose.Types.ObjectId(),
@@ -89,7 +89,7 @@ router.get("/:coursesId", (req, res, next) => {
     });
 });
 
-router.patch("/:courseId", (req, res, next) => {
+router.patch("/:courseId", checkAuth, (req, res, next) => {
   const id = req.params.courseId;
   const updateOps = {};
   for (const ops of req.body) {
@@ -115,7 +115,7 @@ router.patch("/:courseId", (req, res, next) => {
     });
 });
 
-router.delete("/:courseId", (req, res, next) => {
+router.delete("/:courseId", checkAuth, (req, res, next) => {
   const id = req.params.courseId;
   Course.remove({ _id: id })
     .exec()

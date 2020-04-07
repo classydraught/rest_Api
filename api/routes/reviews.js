@@ -79,7 +79,7 @@ router.delete("/:reviewId", (req, res, next) => {
         message: "Review deleted",
         request: {
           type: "POST",
-          url: "http://localhost:3000/orders",
+          url: "http://localhost:3000/reviews",
         },
       });
     })

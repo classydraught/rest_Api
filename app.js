@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const courseRoutes = require("./api/routes/courses");
 const reviewRoutes = require("./api/routes/reviews");
+const userRoutes = require("./api/routes/users");
 const mongoose = require("mongoose");
 
 //mongoose conncetion
@@ -41,6 +42,7 @@ app.use("/images", express.static("images"));
 
 app.use("/courses", courseRoutes);
 app.use("/reviews", reviewRoutes);
+app.use("/user", userRoutes);
 
 //handling errors after reaching above two files
 

@@ -6,6 +6,7 @@ const courseRoutes = require("./api/routes/courses");
 const reviewRoutes = require("./api/routes/reviews");
 const userRoutes = require("./api/routes/users");
 const memberRoutes = require("./api/routes/members");
+const promoRoutes = require("./api/routes/promotions");
 const mongoose = require("mongoose");
 
 //mongoose conncetion
@@ -45,6 +46,7 @@ app.use("/courses", courseRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/user", userRoutes);
 app.use("/members", memberRoutes);
+app.use("/promotions", promoRoutes);
 
 //handling errors after reaching above two files
 

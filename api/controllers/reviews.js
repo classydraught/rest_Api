@@ -87,3 +87,15 @@ exports.patch_Review = (req, res, next) => {
     message: "Updated Review!",
   });
 };
+exports.deleteAll = (req, res, next) => {
+  Review.deleteMany()
+    .exec()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err,
+      });
+    });
+};

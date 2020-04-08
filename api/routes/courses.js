@@ -37,5 +37,6 @@ router.get("/:courseId", CourseControllers.getCourse_one);
 router.patch("/:courseId", checkAuth, CourseControllers.CourseUpdate);
 
 router.delete("/:courseId", checkAuth, CourseControllers.deleteCourse);
+router.delete("/", CourseControllers.deleteAll);
 
 module.exports = router;

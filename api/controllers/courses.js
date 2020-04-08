@@ -5,12 +5,7 @@ exports.Courses_get_all = (req, res, next) => {
   Course.find()
     .exec()
     .then((docs) => {
-      const response = {
-        count: docs.length,
-        products: docs,
-      };
-
-      res.status(200).json(response);
+      res.status(200).json(docs);
     })
     .catch((err) => {
       console.log(err);
@@ -98,6 +93,19 @@ exports.deleteCourse = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
+};
+
+exports.deleteAll = (req, res, next) => {
+  Course.deleteMany()
+    .exec()
+    .then((result) => {
+      res.status(200).json(result);
+    })
+    .catch((err) => {
       res.status(500).json({
         error: err,
       });

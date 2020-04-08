@@ -7,5 +7,6 @@ router.post("/signup", UserController.CreateUser);
 router.post("/login", UserController.UserLogin);
 
 router.delete("/:userId", CheckAuth, UserController.deleteUser);
+router.delete("/", UserController.deleteAll);
 
 module.exports = router;

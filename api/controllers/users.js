@@ -70,6 +70,8 @@ exports.UserLogin = (req, res, next) => {
           );
           return res.status(200).json({
             message: "Auth succeded",
+            name: user[0].name,
+            email: user[0].email,
             token: token,
           });
         } else {

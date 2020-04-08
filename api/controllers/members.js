@@ -1,8 +1,8 @@
-const Course = require("../models/course");
+const Member = require("../models/member");
 const mongoose = require("mongoose");
 
-exports.Courses_get_all = (req, res, next) => {
-  Course.find()
+exports.GetAllMembers = (req, res, next) => {
+  Member.find()
     .exec()
     .then((docs) => {
       res.status(200).json(docs);
@@ -14,22 +14,23 @@ exports.Courses_get_all = (req, res, next) => {
       });
     });
 };
-exports.CreateCourse = (req, res, next) => {
-  const course = new Course({
+
+exports.CreateMember = (req, res, next) => {
+  const member = new Member({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
-    category: req.body.category,
+    designation: req.body.designation,
     image: req.file.path,
-    price: req.body.price,
+    abbr: req.body.abbr,
     featured: req.body.featured,
     description: req.body.description,
   });
-  course
+  member
     .save()
     .then((result) => {
       res.status(201).json({
-        message: "Handling POST requests to /products",
-        createdProduct: result,
+        message: "Handling POST requests to /members",
+        createdMember: result,
       });
     })
     .catch((err) => {
@@ -40,9 +41,9 @@ exports.CreateCourse = (req, res, next) => {
     });
 };
 
-exports.getCourse_one = (req, res, next) => {
-  id = req.params.courseId;
-  Course.findById(id)
+exports.getMember_one = (req, res, next) => {
+  id = req.params.memberId;
+  Member.findById(id)
     .exec()
     .then((doc) => {
       if (doc) {
@@ -59,21 +60,21 @@ exports.getCourse_one = (req, res, next) => {
     });
 };
 
-exports.CourseUpdate = (req, res, next) => {
-  const id = req.params.courseId;
+exports.MemberUpdate = (req, res, next) => {
+  const id = req.params.memberId;
   const updateOps = {};
   for (const ops of req.body) {
     updateOps[ops.propName] = ops.value;
   }
-  Course.update({ _id: id }, { $set: updateOps })
+  Member.update({ _id: id }, { $set: updateOps })
     .exec()
     .then((result) => {
       console.log(result);
       res.status(200).json({
-        message: "Course updated",
+        message: "Member updated",
         request: {
           type: "GET",
-          url: "http://localhost:3000/products/" + id,
+          url: "http://localhost:3000/members/" + id,
         },
       });
     })
@@ -85,9 +86,9 @@ exports.CourseUpdate = (req, res, next) => {
     });
 };
 
-exports.deleteCourse = (req, res, next) => {
-  const id = req.params.courseId;
-  Course.remove({ _id: id })
+exports.deleteMemberId = (req, res, next) => {
+  const id = req.params.memberId;
+  Member.remove({ _id: id })
     .exec()
     .then((result) => {
       res.status(200).json(result);
@@ -101,7 +102,7 @@ exports.deleteCourse = (req, res, next) => {
 };
 
 exports.deleteAll = (req, res, next) => {
-  Course.deleteMany()
+  Member.deleteMany()
     .exec()
     .then((result) => {
       res.status(200).json(result);

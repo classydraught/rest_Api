@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const courseRoutes = require("./api/routes/courses");
 const reviewRoutes = require("./api/routes/reviews");
 const userRoutes = require("./api/routes/users");
+const memberRoutes = require("./api/routes/members");
 const mongoose = require("mongoose");
 
 //mongoose conncetion
@@ -43,6 +44,7 @@ app.use("/images", express.static("images"));
 app.use("/courses", courseRoutes);
 app.use("/reviews", reviewRoutes);
 app.use("/user", userRoutes);
+app.use("/members", memberRoutes);
 
 //handling errors after reaching above two files
 

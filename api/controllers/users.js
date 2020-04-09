@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypyt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const Course = require("../models/course");
 
 exports.CreateUser = (req, res, next) => {
   User.find({ email: req.body.email })
@@ -21,6 +22,7 @@ exports.CreateUser = (req, res, next) => {
               name: req.body.name,
               email: req.body.email,
               password: hash,
+              image: req.file.path,
             });
             user
               .save()
@@ -70,8 +72,11 @@ exports.UserLogin = (req, res, next) => {
           );
           return res.status(200).json({
             message: "Auth succeded",
+            id: user[0]._id,
             name: user[0].name,
             email: user[0].email,
+            image: user[0].image,
+            courses: user[0].courses,
             token: token,
           });
         } else {
@@ -86,6 +91,35 @@ exports.UserLogin = (req, res, next) => {
       req.status(500).json({
         error: err,
       });
+    });
+};
+
+exports.addCoursetoUser = (req, res, next) => {
+  const id = req.body.userId;
+  const courseId = req.body.courseId;
+  Course.findById(courseId)
+    .then(() => {
+      User.findById(id)
+        .then((records) => {
+          return records.courses.includes(courseId);
+        })
+        .then((exists) => {
+          if (!exists) {
+            User.update(
+              { _id: id },
+              { $push: { courses: courseId } }
+            ).then((response) => res.status(200).json(response));
+          } else {
+            res.status(200).json({ message: "Course already purchased" });
+          }
+        })
+        .catch((err) => {
+          res.status(404).json({ error: err, message: "User not found" });
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(404).json({ error: err, message: "Course isn't added" });
     });
 };
 

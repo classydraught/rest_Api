@@ -14,6 +14,7 @@ exports.Courses_get_all = (req, res, next) => {
       });
     });
 };
+
 exports.CreateCourse = (req, res, next) => {
   const course = new Course({
     _id: new mongoose.Types.ObjectId(),

@@ -110,7 +110,7 @@ exports.addCoursetoUser = (req, res, next) => {
               { $push: { courses: courseId } }
             ).then((response) => res.status(200).json(response));
           } else {
-            res.status(200).json({ message: "Course already purchased" });
+            res.status(409).json({ message: "Course already purchased" });
           }
         })
         .catch((err) => {

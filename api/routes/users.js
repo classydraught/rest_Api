@@ -31,7 +31,7 @@ router.post(
 router.post("/login", UserController.UserLogin);
 
 router.delete("/:userId", CheckAuth, UserController.deleteUser);
-router.delete("/", CheckAuth, serController.deleteAll);
+router.delete("/", CheckAuth, UserController.deleteAll);
 router.post("/addCourse", CheckAuth, UserController.addCoursetoUser);
 
 module.exports = router;

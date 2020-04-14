@@ -63,9 +63,12 @@ exports.getCourse_one = (req, res, next) => {
 exports.CourseUpdate = (req, res, next) => {
   const id = req.params.courseId;
   const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
+  console.log(req.body);
+  for (const [key, value] of Object.entries(req.body)) {
+    updateOps[key] = value;
   }
+  console.log(updateOps);
+
   Course.update({ _id: id }, { $set: updateOps })
     .exec()
     .then((result) => {

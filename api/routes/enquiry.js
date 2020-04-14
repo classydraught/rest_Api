@@ -11,6 +11,6 @@ router.get("/:enquiryId", EnquiryControllers.getEnquiry_one);
 router.patch("/:enquiryId", checkAuth, EnquiryControllers.EnquiryUpdate);
 
 router.delete("/:enquiryId", checkAuth, EnquiryControllers.deleteEnquiry);
-router.delete("/", EnquiryControllers.deleteEnquiry);
+router.delete("/", checkAuth, EnquiryControllers.deleteEnquiry);
 
 module.exports = router;

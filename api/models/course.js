@@ -9,5 +9,4 @@ const courseSchema = mongoose.Schema({
   featured: { type: Boolean, required: true },
   description: { type: String, required: true },
 });
-
 module.exports = mongoose.model("Course", courseSchema);

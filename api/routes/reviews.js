@@ -11,6 +11,6 @@ router.get("/:reviewId", ReviewControllers.review_get_one);
 router.patch("/:reviewId", checkAuth, ReviewControllers.patch_Review);
 
 router.delete("/:reviewId", checkAuth, ReviewControllers.delete_review);
-router.delete("/", ReviewControllers.deleteAll);
+router.delete("/", checkAuth, ReviewControllers.deleteAll);
 
 module.exports = router;

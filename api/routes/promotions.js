@@ -37,6 +37,6 @@ router.get("/:promotionId", PromotionControllers.getPromotion_one);
 router.patch("/:promotionId", checkAuth, PromotionControllers.PromotionUpdate);
 
 router.delete("/:promotionId", checkAuth, PromotionControllers.deletePromotion);
-router.delete("/", PromotionControllers.deleteAll);
+router.delete("/", checkAuth, PromotionControllers.deleteAll);
 
 module.exports = router;

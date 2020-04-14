@@ -35,6 +35,6 @@ router.get("/:memberId", MemberControllers.getMember_one);
 router.patch("/:memberId", checkAuth, MemberControllers.MemberUpdate);
 
 router.delete("/:memberId", checkAuth, MemberControllers.deleteMemberId);
-router.delete("/", MemberControllers.deleteAll);
+router.delete("/", checkAuth, MemberControllers.deleteAll);
 
 module.exports = router;

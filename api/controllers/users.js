@@ -88,7 +88,7 @@ exports.UserLogin = (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      req.status(500).json({
+      res.status(500).json({
         error: err,
       });
     });
@@ -124,17 +124,27 @@ exports.addCoursetoUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  User.deleteOne({ _id: req.params.userId })
+  User.find({ _id: req.params.userId })
     .exec()
-    .then((result) => {
-      res.status(200).json({
-        message: "User deleted",
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ result: err, message: "Failed deleting" });
-    });
+    .then((user) => {
+      if (user.length < 1) {
+        return res.status(404).json({
+          message: "User not found",
+        });
+      }
+      User.deleteOne({ _id: req.params.userId })
+        .exec()
+        .then((result) => {
+          res.status(200).json({
+            message: "User deleted",
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(500).json({ result: err, message: "Failed deleting" });
+        });
+    }
+    )
 };
 
 exports.deleteAll = (req, res, next) => {
